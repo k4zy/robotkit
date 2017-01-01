@@ -8,7 +8,7 @@ Or add this line `gem 'robotkit'` to your application's Gemfile and execute `bun
 
 ## Usage
 
-robotkit create :output_dir --package your.package.name
+`robotkit create :output_dir --package your.package.name`
 
 Options
 ```
