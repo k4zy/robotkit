@@ -6,24 +6,24 @@ require "erb"
 module Robotkit
   PROJECT_ROOT_PATH = File.dirname(File.dirname(File.dirname(__FILE__)))
   class CLI < Thor
-    desc "create :project_name --package com.github.library", "Create Android project"
+    desc "create :output_dir", "Create Android library project."
     option :package, required: true
     option :library_module
     option :sample_module
     option :fixtures_dir
-    def create(project_name)
-      puts project_name
-      Robotkit.exec(options.merge({output_dir: project_name}))
+    def create(output_dir)
+      puts output_dir
+      Robotkit.exec(options.merge({output_dir: output_dir}))
     end
   end
 
   def self.exec(params)
-    sample_package_name = "#{params[:package]}.sample"
-    library_package_name = params[:package]
-    library_module = params[:library_module] || "library"
-    sample_module = params[:sample_module] || "sample"
     fixtures_dir = params[:fixtures_dir] || File.join(PROJECT_ROOT_PATH, "fixtures")
     output_dir = params[:output_dir]
+    library_package_name = params[:package]
+    sample_package_name = "#{params[:package]}.sample"
+    library_module = params[:library_module] || "library"
+    sample_module = params[:sample_module] || "sample"
 
     # copy from fixtues dir to output dir
     FileUtils.mkdir(output_dir)
