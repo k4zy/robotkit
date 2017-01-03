@@ -27,7 +27,7 @@ module Robotkit
 
     # copy from fixtues dir to output dir
     FileUtils.mkdir(output_dir)
-    Dir.foreach(fixtures_dir).reject{|it| it.start_with?(".")}.each do |item|
+    Dir.foreach(fixtures_dir).reject{|it| it.start_with?(".") && it == ".gitignore"}.each do |item|
       FileUtils.rm("#{output_dir}/#{item}", {force: true})
       FileUtils.cp_r("#{fixtures_dir}/#{item}", "#{output_dir}/#{item}", {preserve: true, dereference_root: true})
     end
