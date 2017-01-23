@@ -39,6 +39,7 @@ module Robotkit
 
     # create lib package dir
     FileUtils.mkdir_p("#{output_dir}/#{library_module}/src/main/java/#{library_package_name.gsub('.','/')}")
+    FileUtils.rm_rf("#{output_dir}/#{library_module}/src/main/java/{library_package}")
     FileUtils.rm_rf("#{output_dir}/#{library_module}/{library_module}")
 
     # create sample package dir
@@ -51,6 +52,7 @@ module Robotkit
         file.write(result)
       end
     end
+    FileUtils.rm_rf("#{output_dir}/#{sample_module}/src/main/java/{sample_package}")
     FileUtils.rm_rf("#{output_dir}/#{sample_module}/{sample_module}")
 
     #eval erb
