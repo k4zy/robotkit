@@ -20,6 +20,7 @@ module Robotkit
   def self.exec(params)
     fixtures_dir = params[:fixtures_dir] || File.join(PROJECT_ROOT_PATH, "fixtures")
     output_dir = params[:output_dir]
+    project_name = params[:output_dir]
     library_package_name = params[:package]
     sample_package_name = "#{params[:package]}.sample"
     library_module = params[:library_module] || "library"
