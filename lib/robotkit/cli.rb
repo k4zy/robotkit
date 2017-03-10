@@ -5,6 +5,7 @@ require "erb"
 
 module Robotkit
   PROJECT_ROOT_PATH = File.dirname(File.dirname(File.dirname(__FILE__)))
+  IGNORE_FILES = %w(. .. .DS_Store)
   class CLI < Thor
     desc "create :output_dir", "Create Android library project."
     option :package, required: true
@@ -28,7 +29,7 @@ module Robotkit
 
     # copy from fixtues dir to output dir
     FileUtils.mkdir(output_dir)
-    Dir.foreach(fixtures_dir).reject{|it| it.start_with?(".") && it == ".gitignore"}.each do |item|
+    Dir.foreach(fixtures_dir).reject{|it| IGNORE_FILES.include?(it)}.each do |item|
       FileUtils.rm("#{output_dir}/#{item}", {force: true})
       FileUtils.cp_r("#{fixtures_dir}/#{item}", "#{output_dir}/#{item}", {preserve: true, dereference_root: true})
     end
