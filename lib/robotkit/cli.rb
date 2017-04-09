@@ -13,17 +13,16 @@ module Robotkit
       options[:output_dir] = prompt.ask('What is library name?', default: 'SampleLibrary')
       options[:package_name] = prompt.ask('What is package name?', default: 'com.android.sample')
       options[:module_name] = prompt.ask('What is module name?', default: options[:output_dir].downcase)
-      options[:min_sdk] = prompt.ask('Type min_sdk version', default: 16)
-      options[:target_sdk] = prompt.ask('Type target_sdk version', default: 25)
-
-      library_choices = %w(maven-gradle-plugin jack)
-      options[:selected_library_options] = prompt.multi_select("Select library module options: ", library_choices)
-
-      sample_choices = %w(jack rxjava1 rxjava2)
-      options[:selected_sample_options] = prompt.multi_select("Select sample module options: ", sample_choices)
-
-      puts options[:output_dir]
+      # options[:min_sdk] = prompt.ask('Type min_sdk version', default: 16)
+      # options[:target_sdk] = prompt.ask('Type target_sdk version', default: 25)
+      #
+      # library_choices = %w(maven-gradle-plugin jack)
+      # options[:selected_library_options] = prompt.multi_select("Select library module options: ", library_choices)
+      #
+      # sample_choices = %w(jack rxjava1 rxjava2)
+      # options[:selected_sample_options] = prompt.multi_select("Select sample module options: ", sample_choices)
       Robotkit.exec(options)
+      puts "#{options[:output_dir]} created"
     end
   end
 
