@@ -1,5 +1,5 @@
 require 'robotkit'
-require 'tty'
+require 'tty-prompt'
 require "fileutils"
 require "erb"
 
