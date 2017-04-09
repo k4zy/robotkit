@@ -1,20 +1,28 @@
 require 'robotkit'
-require 'thor'
+require 'tty-prompt'
 require "fileutils"
 require "erb"
 
 module Robotkit
   PROJECT_ROOT_PATH = File.dirname(File.dirname(File.dirname(__FILE__)))
   IGNORE_FILES = %w(. .. .DS_Store)
-  class CLI < Thor
-    desc "create :output_dir", "Create Android library project."
-    option :package, required: true
-    option :library_module
-    option :sample_module
-    option :fixtures_dir
-    def create(output_dir)
-      puts output_dir
-      Robotkit.exec(options.merge({output_dir: output_dir}))
+  class CLI
+    def self.start
+      options = {}
+      prompt = TTY::Prompt.new(help_color: :cyan)
+      options[:output_dir] = prompt.ask('What is library name?', default: 'SampleLibrary')
+      options[:package_name] = prompt.ask('What is package name?', default: 'com.android.sample')
+      options[:module_name] = prompt.ask('What is module name?', default: options[:output_dir].downcase)
+      # options[:min_sdk] = prompt.ask('Type min_sdk version', default: 16)
+      # options[:target_sdk] = prompt.ask('Type target_sdk version', default: 25)
+      #
+      # library_choices = %w(maven-gradle-plugin jack)
+      # options[:selected_library_options] = prompt.multi_select("Select library module options: ", library_choices)
+      #
+      # sample_choices = %w(jack rxjava1 rxjava2)
+      # options[:selected_sample_options] = prompt.multi_select("Select sample module options: ", sample_choices)
+      Robotkit.exec(options)
+      puts "#{options[:output_dir]} created"
     end
   end
 
@@ -22,9 +30,9 @@ module Robotkit
     fixtures_dir = params[:fixtures_dir] || File.join(PROJECT_ROOT_PATH, "fixtures")
     output_dir = params[:output_dir]
     project_name = params[:output_dir]
-    library_package_name = params[:package]
-    sample_package_name = "#{params[:package]}.sample"
-    library_module = params[:library_module] || "library"
+    library_package_name = params[:package_name]
+    sample_package_name = "#{params[:package_name]}.sample"
+    library_module = params[:module_name] || "library"
     sample_module = params[:sample_module] || "sample"
 
     # copy from fixtues dir to output dir
