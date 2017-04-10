@@ -13,9 +13,8 @@ module Robotkit
       options[:output_dir] = prompt.ask('What is library name?', default: 'SampleLibrary')
       options[:package_name] = prompt.ask('What is package name?', default: 'com.android.sample')
       options[:module_name] = prompt.ask('What is module name?', default: options[:output_dir].downcase)
-      # options[:min_sdk] = prompt.ask('Type min_sdk version', default: 16)
-      # options[:target_sdk] = prompt.ask('Type target_sdk version', default: 25)
-      #
+      options[:min_sdk] = prompt.ask('Type min_sdk version', default: 16)
+      options[:target_sdk] = prompt.ask('Type target_sdk version', default: 25)
       # library_choices = %w(maven-gradle-plugin jack)
       # options[:selected_library_options] = prompt.multi_select("Select library module options: ", library_choices)
       #
@@ -34,6 +33,8 @@ module Robotkit
     sample_package_name = "#{params[:package_name]}.sample"
     library_module = params[:module_name] || "library"
     sample_module = params[:sample_module] || "sample"
+    min_sdk = params[:min_sdk]
+    target_sdk = params[:target_sdk]
 
     # copy from fixtues dir to output dir
     FileUtils.mkdir(output_dir)
