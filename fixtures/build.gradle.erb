@@ -4,7 +4,9 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.0'
+        <%- if library_options.include?('android-maven-gradle-plugin') -%>
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        <%- end -%>
     }
 }
 
