@@ -15,9 +15,9 @@ module Robotkit
       options[:module_name] = prompt.ask('What is module name?', default: options[:output_dir].downcase)
       options[:min_sdk] = prompt.ask('Type min_sdk version', default: 16)
       options[:target_sdk] = prompt.ask('Type target_sdk version', default: 25)
-      # library_choices = %w(maven-gradle-plugin jack)
-      # options[:selected_library_options] = prompt.multi_select("Select library module options: ", library_choices)
-      #
+      library_choices = %w(android-maven-gradle-plugin)
+      options[:library_options] = prompt.multi_select("Select library module options: ", library_choices)
+
       # sample_choices = %w(jack rxjava1 rxjava2)
       # options[:selected_sample_options] = prompt.multi_select("Select sample module options: ", sample_choices)
       Robotkit.exec(options)
@@ -35,6 +35,7 @@ module Robotkit
     sample_module = params[:sample_module] || "sample"
     min_sdk = params[:min_sdk]
     target_sdk = params[:target_sdk]
+    library_options = params[:library_options]
 
     # copy from fixtues dir to output dir
     FileUtils.mkdir(output_dir)
@@ -59,7 +60,7 @@ module Robotkit
     sample_files = %w(MainActivity SampleApplication)
     sample_files.each do |file_name|
       File.open("#{sample_package_src}/#{file_name}.java", "w") do |file|
-        result = ERB.new(File.open("#{output_dir}/#{sample_module}/src/main/java/{sample_package}/#{file_name}.java.erb").read).result(binding)
+        result = ERB.new(File.open("#{output_dir}/#{sample_module}/src/main/java/{sample_package}/#{file_name}.java.erb").read, nil, '-').result(binding)
         file.write(result)
       end
     end
@@ -68,7 +69,7 @@ module Robotkit
 
     #eval erb
     Dir.glob("#{output_dir}/**/*").select{|it| it.end_with?("erb")}.each do |path|
-      result = ERB.new(File.open(path).read).result(binding)
+      result = ERB.new(File.open(path).read, nil, '-').result(binding)
       File.open(path.sub(".erb", ""), "w") do |file|
         file.write(result)
       end
