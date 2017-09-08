@@ -14,7 +14,7 @@ module Robotkit
       options[:package_name] = prompt.ask('What is package name?', default: 'com.android.sample')
       options[:module_name] = prompt.ask('What is module name?', default: options[:output_dir].downcase)
       options[:min_sdk] = prompt.ask('Type min_sdk version', default: 16)
-      options[:target_sdk] = prompt.ask('Type target_sdk version', default: 25)
+      options[:target_sdk] = prompt.ask('Type target_sdk version', default: 26)
       library_choices = %w(android-maven-gradle-plugin)
       options[:library_options] = prompt.multi_select("Select library module options: ", library_choices)
 
